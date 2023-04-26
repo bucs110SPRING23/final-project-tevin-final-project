@@ -2,17 +2,17 @@
 :warning: Everything between << >> needs to be replaced (remove << >> after replacing)
 
 # << Project Title >>
-## CS110 Final Project  << Semester, Year >>
+## CS110 Final Project  Spring 2023
 
 ## Team Members
 
-<< List team member names >>
+Tevin Flom 
 
 ***
 
 ## Project Description
 
-<< Give an overview of your project >>
+This is an object-detection based Street-Fighter style game that uses household items to attack in the game. This is a two player arcade-style game with player controls on either side of a standard keyboard. The game will include a dataset of real-life objects the game can detect and deploy, but users should find items in their surroundings to use in the game. The first player to lose all of their health points loses the game. 
 
 ***    
 
@@ -30,15 +30,19 @@
 
 ### Features
 
-1. << Feature 1 >>
-2. << Feature 2 >>
-3. << Feature 3 >>
-4. << Feature 4 >>
-5. << Feature 5 >>
+1. Start menu
+2. Image File Upload/Webcam Access for object detection
+3. Object Selection Menu
+4. Powerup Sprites with Animations 
+5. Health status bars 
 
 ### Classes
 
-- << You should have a list of each of your classes with a description >>
+- Controller - contains the game loop and some global variables & imports for now 
+- Player - the game physics for players as well as attacks are here 
+- Detections - contains the YOLO object detection model and its predictions as well as the objects they translate to in the game. This will likely have to become several different classes to align with the structure of the YOLO model (ie. foods, utensils, kitchen appliances, etc. )
+- Powerups - contains the conditions and special attack actions that both players and detections can do in the game 
+
 
 ## ATP
 

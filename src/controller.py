@@ -9,7 +9,7 @@ SCREEN_H = 600
 screensize = (SCREEN_W, SCREEN_H)
 
 screen = pygame.display.set_mode(screensize) 
-pygame.display.set_caption("Object Detection Fight")
+pygame.display.set_caption("Object Detection Fighter Game")
 
 background = pygame.image.load("assets\wildwestbackground.jpg")
 scaled_background = pygame.transform.scale(background, screensize) 
@@ -29,6 +29,8 @@ while run_game:
     #spawn players
     player_1.spawn(screen)
     player_2.spawn(screen)
+
+    #COLLISION HANDLING GOES HERE#
 
     for event in pygame.event.get(): 
         if event.type == pygame.QUIT: 

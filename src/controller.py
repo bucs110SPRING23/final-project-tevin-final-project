@@ -19,6 +19,12 @@ class Controller():
     def __init__(self):
         pass
     def introloop(): 
+        """
+        This function runs a temporary intro screen. The user presses the space bar to exit the screen and begin the game. It does not work properly. 
+        Args:None 
+        Returns: None
+        
+        """
         intro_img = pygame.image.load("assets/introscreen.png").convert_alpha()
         screen.blit(intro_img, (0, 0))
         key = pygame.key.get_pressed() 
@@ -29,10 +35,21 @@ class Controller():
             screen.blit(intro_img, (0,0))
 
     def draw_screen(): 
+        """
+        This function sets up the screen for the game. 
+        Args: none 
+        Returns: none 
+        
+        """
         scaled_bg = pygame.transform.scale(background, (SCREEN_W, SCREEN_H))
         screen.blit(scaled_bg, (0,0))
 
     def healthbars(health, x, y):
+        """ 
+        This function constructs and updates the health bars. When either player's health bar reaches zero, the KO image blits to the screen.
+        Args: health, x, y (all from player class) 
+        Returns: none
+        """
         health_loss = health / 200
         pygame.draw.rect(screen, "red", (x, y, 400, 30))
         pygame.draw.rect(screen, "green", (x, y, 400 * health_loss, 30))

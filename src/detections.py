@@ -2,11 +2,25 @@ import cv2
 import numpy
 from ultralytics import YOLO 
 class Detections:
-    def __init__(self, img, img_path): 
+    def __init__(self, img, img_path):
+        """
+        This function sets up the utilities for the YOLOv8 object detection model. 
+        Args: self, image you wish to run through the model(OpenCV), image path(str)
+        Returns: none
+        """
+        
         self.img = img 
         self.path = str(img_path)
         self.weights = 'yolov8n.pt'
     def object_detection(): 
+
+        """
+        This function takes the file path input from the user, runs it through the object detection model, and asses attack 2 damage based on how difficult the object was to find/obtain.
+        If there are multiple objects in the frame and multiple detections are made, the attack 2 damage compounds. 
+        The object detection portion works(see assets/diningroomtest.jpg), extracting the detection information from the numpy array produced by the model does not.
+        Args: none 
+        Returns: a2impact(int) this is the amount of health points the attack will take off
+        """
         img_path = print(input("Type in File Path for the Image Containing Household Objects:  "))
         img_path = str(img_path)
         img = cv2.imread(img_path)

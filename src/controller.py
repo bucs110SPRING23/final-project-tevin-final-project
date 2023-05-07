@@ -1,154 +1,70 @@
-import pygame
-from fighter import Fighter
+import pygame 
+from player import Player
 
+pygame.init() 
 
-pygame.init()
-
-#create game window
-SCREEN_W = 1000
-SCREEN_H = 600
-
+SCREEN_W = 1000 
+SCREEN_H = 600 
 screen = pygame.display.set_mode((SCREEN_W, SCREEN_H))
-pygame.display.set_caption("Street Fighter Game")
-
-#set framerate
-clock = pygame.time.Clock()
-FPS = 60
-
-#define colours
-# RED = (255, 0, 0)
-# YELLOW = (255, 255, 0)
-# WHITE = (255, 255, 255)
-
-#define game variables
-#intro_count = 3
-#last_count_update = pygame.time.get_ticks()
-#score = [0, 0]#player scores. [P1, P2]
-game_over = False
-game_cooldown = 2000
-
-#define fighter variables
-HUNTRESS_SIZE = 250
-HUNTRESS_SCALE = 4
-HUNTRESS_OFFSET = [120,120]
-HUNTRESS_DATA = [HUNTRESS_SIZE, HUNTRESS_SCALE, HUNTRESS_OFFSET]
-WIZARD_SIZE = 180
-WIZARD_SCALE = 3
-WIZARD_OFFSET = [90, 75]
-WIZARD_DATA = [WIZARD_SIZE, WIZARD_SCALE, WIZARD_OFFSET]
-
-# #load music and sounds
-# pygame.mixer.music.load("assets/audio/music.mp3")
-# pygame.mixer.music.set_volume(0.5)
-# pygame.mixer.music.play(-1, 0.0, 5000)
-# sword_fx = pygame.mixer.Sound("assets/audio/sword.wav")
-# sword_fx.set_volume(0.5)
-# magic_fx = pygame.mixer.Sound("assets/audio/magic.wav")
-# magic_fx.set_volume(0.75)
-
-#load background image
 background = pygame.image.load("assets/wildwestbackground.jpg").convert_alpha()
-
-#load spritesheets
-huntress_sheet = pygame.image.load("assets/tryhuntress.png").convert_alpha()
-wizard_sheet = pygame.image.load("assets/trywizard.png").convert_alpha()
-
-#load vicory image
-#victory_img = pygame.image.load("assets/images/icons/victory.png").convert_alpha()
-
-#define number of steps in each animation
-HUNTRESS_ANIMATION_STEPS = [5, 7, 8, 8, 2]
-WIZARD_ANIMATION_STEPS = [8, 8, 6, 8, 2]
-
-#define font
-#count_font = pygame.font.Font("assets/fonts/turok.ttf", 80)
-#score_font = pygame.font.Font("assets/fonts/turok.ttf", 30)
-
-#function for drawing text
-# def draw_text(text, font, text_col, x, y):
-#   img = font.pygame.render(text, True, text_col)
-#   screen.blit(img, (x, y))
-
-#function for drawing background
-def draw_bg():
-  scaled_bg = pygame.transform.scale(background, (SCREEN_W, SCREEN_H))
-  screen.blit(scaled_bg, (0, 0))
-
-#function for drawing fighter health bars
-def draw_health_bar(health, x, y):
-  ratio = health / 100
-  #pygame.draw.rect(screen, WHITE, (x - 2, y - 2, 404, 34))
-  pygame.draw.rect(screen, "red", (x, y, 400, 30))
-  pygame.draw.rect(screen, "green", (x, y, 400 * ratio, 30))
+f1_img = pygame.image.load("assets/kengood.png").convert_alpha()
+f2_img = pygame.image.load("assets/ryugood.png").convert_alpha()
+fighter_1 = Player(1, 200, 200, f1_img) 
+fighter_2 = Player(2, 700, 200, f2_img)
+windowcap = pygame.display.set_caption("Object Detection Street Fighter Clone")
 
 
-#create two instances of fighters
-fighter_1 = Fighter(1, 200, 310, False, HUNTRESS_DATA, huntress_sheet, HUNTRESS_ANIMATION_STEPS)
-fighter_2 = Fighter(2, 700, 310, True, WIZARD_DATA, wizard_sheet, WIZARD_ANIMATION_STEPS)
+class Controller(): 
 
-#game loop
-run = True
-while run:
+    def __init__(self):
+        pass
+    def introloop(): 
+        intro_img = pygame.image.load("assets/introscreen.png").convert_alpha()
+        screen.blit(intro_img, (0, 0))
+        key = pygame.key.get_pressed() 
+        if key[pygame.K_SPACE]: 
+            pygame.time.wait(10000)
+            pygame.display.update() 
+        else: 
+            screen.blit(intro_img, (0,0))
 
-  clock.tick(FPS)
+    def draw_screen(): 
+        scaled_bg = pygame.transform.scale(background, (SCREEN_W, SCREEN_H))
+        screen.blit(scaled_bg, (0,0))
 
-  #draw background
-  draw_bg()
-
-  #show player stats
-  draw_health_bar(fighter_1.health, 20, 20)
-  draw_health_bar(fighter_2.health, 580, 20)
-  #draw_text("Player 1", None, RED, 20, 60)
-  #draw_text("Player 2", None, RED, 580, 60)
-
-  #update countdown
-  #if intro_count <= 0:
-    #move fighters
-  fighter_1.move(SCREEN_W, SCREEN_H, screen, fighter_2, game_over)
-  fighter_2.move(SCREEN_W, SCREEN_H, screen, fighter_1, game_over)
-  #else:
-    #display count timer
-    #draw_text(str(intro_count), count_font, RED, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3)
-    #update count timer
-    #if (pygame.time.get_ticks() - last_count_update) >= 1000:
-      #intro_count -= 1
-      #last_count_update = pygame.time.get_ticks()
-
-  #update fighters
-  fighter_1.update()
-  fighter_2.update()
-
-  #draw fighters
-  fighter_1.draw(screen)
-  fighter_2.draw(screen)
-
-  #check for player defeat
-  if game_over == False:
-    if fighter_1.alive == False:
-      #score[1] += 1
-      game_over = True
-      round_over_time = pygame.time.get_ticks()
-    elif fighter_2.alive == False:
-      #score[0] += 1
-      game_over = True
-      round_over_time = pygame.time.get_ticks()
-  else:
-    #display victory imageround
-    #screen.blit(victory_img, (360, 150))
-    if pygame.time.get_ticks() > game_cooldown:
-      game_over = False
-      #intro_count = 3
-    fighter_1 = Fighter(1, 200, 310, False, HUNTRESS_DATA, huntress_sheet, HUNTRESS_ANIMATION_STEPS)
-    fighter_2 = Fighter(2, 700, 310, True, WIZARD_DATA, wizard_sheet, WIZARD_ANIMATION_STEPS)
-
-  #event handler
-  for event in pygame.event.get():
-    if event.type == pygame.QUIT:
-      run = False
+    def healthbars(health, x, y):
+        health_loss = health / 200
+        pygame.draw.rect(screen, "red", (x, y, 400, 30))
+        pygame.draw.rect(screen, "green", (x, y, 400 * health_loss, 30))
+        if health == 0: 
+            koimage = pygame.image.load("assets/ko.png")
+            screen.blit(koimage, (500, 300))
+            pygame.time.wait(5000)
+        
+    
 
 
-  #update display
-  pygame.display.update()
+    
 
-#exit pygame
-pygame.quit()
+
+
+
+    ## GAMELOOP ## 
+    run = True 
+    while run: 
+
+        introloop()
+        draw_screen()
+        healthbars(fighter_1.health, 20, 20)
+        healthbars(fighter_2.health, 580, 20)
+        fighter_1.spawnplayer1(screen)
+        fighter_1.move(SCREEN_W, SCREEN_H, screen, fighter_2)
+        fighter_2.spawnplayer2(screen) 
+        fighter_2.move(SCREEN_W, SCREEN_H, screen, fighter_1)
+
+        ## EVENT HANDLER ##
+        for event in pygame.event.get(): 
+            if event.type == pygame.QUIT:
+                run = False 
+        pygame.display.update()
+    pygame.quit()

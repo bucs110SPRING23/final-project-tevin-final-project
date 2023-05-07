@@ -1,6 +1,6 @@
 import pygame 
 
-import spriteclass
+import etc.spriteclass as spriteclass
 
 pygame.init()
 

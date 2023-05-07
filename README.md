@@ -41,7 +41,6 @@ This is an object-detection based Street-Fighter style game that uses household 
 - Controller - contains the game loop and some global variables & imports for now 
 - Player - the game physics for players as well as attacks are here 
 - Detections - contains the YOLO object detection model and its predictions as well as the objects they translate to in the game. This will likely have to become several different classes to align with the structure of the YOLO model (ie. foods, utensils, kitchen appliances, etc. )
-- Powerups - contains the conditions and special attack actions that both players and detections can do in the game 
 
 
 ## ATP

@@ -76,8 +76,10 @@ class Controller():
         healthbars(fighter_2.health, 580, 20)
         fighter_1.spawnplayer1(screen)
         fighter_1.move(SCREEN_W, SCREEN_H, screen, fighter_2)
+        #fighter_1.attack(enemy = fighter_2, a2impact = 10)
         fighter_2.spawnplayer2(screen) 
         fighter_2.move(SCREEN_W, SCREEN_H, screen, fighter_1)
+        #fighter_1.attack(enemy = fighter_2, a2impact = 10)
 
         ## EVENT HANDLER ##
         for event in pygame.event.get(): 
